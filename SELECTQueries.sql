@@ -60,3 +60,24 @@ SELECT * FROM Member_books;
 SELECT * FROM Member;
 SELECT * FROM Loan;
 SELECT * FROM Payment;
+
+SELECT M.MemberID as 'Member ID', M.Full_Name as 'Member Name', SUM(P.Amount) as 'Total Fine' 
+FROM Member M INNER JOIN Member_books MB ON M.MemberID = MB.MemberID
+INNER JOIN Loan L ON L.LoanID = MB.LoanID
+INNER JOIN Payment P ON L.LoanID = P.LoanID
+GROUP BY M.MemberID, M.Full_Name;
+
+--8. GET /reviews → Reviews with member and book info  
+
+SELECT * FROM Member;
+SELECT * FROM Book;
+SELECT * FROM Review;
+SELECT * FROM Member_reviewed_books;
+
+SELECT
+M.MemberID as 'Member ID', M.Full_Name as 'Member Name', 
+B.BookID as 'Book ID', B.Title as 'Book Title', B.Genre as 'Book Genre', B.Price as 'Book Price',
+R.ReviewID as 'Review ID', R.Rating as 'Review Rating', R.Comment as 'Review Comment'
+FROM Member M INNER JOIN Member_reviewed_books MRB ON M.MemberID = MRB.MemberID
+INNER JOIN Book B ON B.BookID = MRB.BookID 
+INNER JOIN Review R ON R.ReviewID = MRB.ReviewID;
