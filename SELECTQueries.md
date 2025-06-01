@@ -81,4 +81,19 @@ GROUP BY L.LibraryID, L.LibraryName, B.Genre;
 
 ![GET /libraries/:id/genres](./image/get_libraries_id_genres.png)
 
+**6. GET /members/inactive**
+
+ List members with no loans  
+
+ ```sql
+SELECT * FROM Member_books;
+SELECT * FROM Member;
+
+SELECT M.Full_Name as 'Member Name'
+FROM Member M LEFT JOIN Member_books MB ON M.MemberID = MB.MemberID
+WHERE MB.MemberID IS NULL;
+ ```
+
+![GET /members/inactive](./image/get_members_inactive.png)
+
 

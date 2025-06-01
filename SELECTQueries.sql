@@ -44,3 +44,14 @@ SELECT * FROM Library;
 SELECT L.LibraryID as 'Library ID', L.LibraryName as 'Library Name', B.Genre as 'Genre', COUNT(B.LibraryID) as 'Number of Books'
 FROM Library L INNER JOIN Book B ON L.LibraryID = B.LibraryID
 GROUP BY L.LibraryID, L.LibraryName, B.Genre;
+
+--6. GET /members/inactive → List members with no loans  
+
+SELECT * FROM Member_books;
+SELECT * FROM Member;
+
+SELECT M.Full_Name as 'Member Name'
+FROM Member M LEFT JOIN Member_books MB ON M.MemberID = MB.MemberID
+WHERE MB.MemberID IS NULL;
+
+
