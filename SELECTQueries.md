@@ -240,6 +240,28 @@ WHERE MB.Status != 'Returned';
 
 ![GET /loans/active](./image/get_loans_active.png)
 
+**15. GET /members/with-fines**
+
+List members who have paid any fine.
+
+```sql
+SELECT * FROM Member;
+SELECT * FROM Loan;
+SELECT * FROM Member_books;
+SELECT * FROM Payment;
+
+SELECT M.MemberID as 'Member ID', M.Full_Name as 'Member Name',
+L.LoanID as 'Loan ID',
+P.*
+FROM Member M INNER JOIN Member_books MB ON M.MemberID = MB.MemberID
+INNER JOIN Loan L ON L.LoanID = MB.LoanID
+RIGHT OUTER JOIN Payment P ON L.LoanID = P.LoanID;
+```
+
+![GET /members/with-fines](./image/get_members_with_fines.png)
+
+
+
 
 
 
