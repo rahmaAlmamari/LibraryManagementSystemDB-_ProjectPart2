@@ -193,3 +193,12 @@ SELECT * FROM Member_books;
 SELECT M.* 
 FROM Member M LEFT OUTER JOIN Member_books MB ON M.MemberID = MB.MemberID
 WHERE MB.MemberID IS NULL;
+
+--19. GET /books/never-loaned → List books that were never loaned. 
+
+SELECT * FROM Book;
+SELECT * FROM Member_books;
+
+SELECT B.*
+FROM Book B LEFT OUTER JOIN Member_books MB ON B.BookID = MB.BookID
+WHERE MB.BookID IS NULL;

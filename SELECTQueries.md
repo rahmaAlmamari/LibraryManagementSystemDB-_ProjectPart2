@@ -309,6 +309,21 @@ WHERE MB.MemberID IS NULL;
 
 ![GET /members/inactive](./image/get_members_inactive2.png)
 
+**19. GET /books/never-loaned**
+
+List books that were never loaned.
+
+```sql
+SELECT * FROM Book;
+SELECT * FROM Member_books;
+
+SELECT B.*
+FROM Book B LEFT OUTER JOIN Member_books MB ON B.BookID = MB.BookID
+WHERE MB.BookID IS NULL;
+```
+
+![GET /books/never-loaned](./image/get_books_never_loaned.png)
+
 
 
 
