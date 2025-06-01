@@ -81,3 +81,14 @@ R.ReviewID as 'Review ID', R.Rating as 'Review Rating', R.Comment as 'Review Com
 FROM Member M INNER JOIN Member_reviewed_books MRB ON M.MemberID = MRB.MemberID
 INNER JOIN Book B ON B.BookID = MRB.BookID 
 INNER JOIN Review R ON R.ReviewID = MRB.ReviewID;
+
+--9. GET /books/popular → List top 3 books by number of times they were loaned 
+
+SELECT * FROM Book;
+SELECT * FROM Member_books;
+
+SELECT B.BookID as 'Book ID', B.Title as 'Book Title', COUNT(MB.BookID) as 'Number of Times Loaned'
+FROM Book B INNER JOIN Member_books MB ON B.BookID = MB.BookID
+GROUP BY B.BookID, B.Title
+ORDER BY COUNT(MB.BookID);
+
