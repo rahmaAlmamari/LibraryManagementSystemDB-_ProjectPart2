@@ -162,3 +162,12 @@ P.*
 FROM Member M INNER JOIN Member_books MB ON M.MemberID = MB.MemberID
 INNER JOIN Loan L ON L.LoanID = MB.LoanID
 RIGHT OUTER JOIN Payment P ON L.LoanID = P.LoanID;
+
+--16. GET /books/never-reviewed →  List books that have never been reviewed 
+
+SELECT * FROM Book;
+SELECT * FROM Member_reviewed_books;
+
+SELECT B.*
+FROM Book B LEFT OUTER JOIN Member_reviewed_books MRB ON B.BookID = MRB.BookID
+WHERE MRB.BookID  IS NULL;

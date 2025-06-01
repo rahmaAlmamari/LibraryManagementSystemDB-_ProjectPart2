@@ -260,6 +260,21 @@ RIGHT OUTER JOIN Payment P ON L.LoanID = P.LoanID;
 
 ![GET /members/with-fines](./image/get_members_with_fines.png)
 
+**16. GET /books/never-reviewed**
+
+List books that have never been reviewed.
+
+```sql
+SELECT * FROM Book;
+SELECT * FROM Member_reviewed_books;
+
+SELECT B.*
+FROM Book B LEFT OUTER JOIN Member_reviewed_books MRB ON B.BookID = MRB.BookID
+WHERE MRB.BookID  IS NULL;
+```
+
+![GET /books/never-reviewed](./image/get_books_never_reviewed.png)
+
 
 
 
