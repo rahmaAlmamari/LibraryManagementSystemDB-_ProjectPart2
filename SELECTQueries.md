@@ -96,4 +96,25 @@ WHERE MB.MemberID IS NULL;
 
 ![GET /members/inactive](./image/get_members_inactive.png)
 
+**7. GET /payments/summary**
+
+Total fine paid per member  
+
+```sql
+SELECT * FROM Member_books;
+SELECT * FROM Member;
+SELECT * FROM Loan;
+SELECT * FROM Payment;
+
+SELECT M.MemberID as 'Member ID', M.Full_Name as 'Member Name', SUM(P.Amount) as 'Total Fine' 
+FROM Member M INNER JOIN Member_books MB ON M.MemberID = MB.MemberID
+INNER JOIN Loan L ON L.LoanID = MB.LoanID
+INNER JOIN Payment P ON L.LoanID = P.LoanID
+GROUP BY M.MemberID, M.Full_Name;
+```
+
+![GET /payments/summary](./image/get_payments_summary.png)
+
+
+
 

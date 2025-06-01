@@ -54,4 +54,9 @@ SELECT M.Full_Name as 'Member Name'
 FROM Member M LEFT JOIN Member_books MB ON M.MemberID = MB.MemberID
 WHERE MB.MemberID IS NULL;
 
+--7. GET /payments/summary → Total fine paid per member 
 
+SELECT * FROM Member_books;
+SELECT * FROM Member;
+SELECT * FROM Loan;
+SELECT * FROM Payment;
