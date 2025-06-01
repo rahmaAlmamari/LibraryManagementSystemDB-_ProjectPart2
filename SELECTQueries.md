@@ -32,3 +32,21 @@ SELECT * FROM Book WHERE Availability_Status = 'FALSE';
  ```
 
 ![GET /books/unavailable](./image/get_books_unavailable.png)
+
+**3. GET /members/top-borrowers**
+
+Members who borrowed >2 books 
+
+```sql
+SELECT * FROM Member_books;
+SELECT * FROM Member;
+
+SELECT M.Full_Name as 'Member Name', COUNT(MB.MemberID) AS Total_Borrowed
+FROM Member M INNER JOIN Member_books MB ON M.MemberID = MB.MemberID
+GROUP BY M.MemberID, M.Full_Name
+HAVING COUNT(MB.MemberID) > 2;
+```
+
+![GET /members/top-borrowers](./image/get_members_topBorrowers.png)
+
+
