@@ -49,4 +49,21 @@ HAVING COUNT(MB.MemberID) > 2;
 
 ![GET /members/top-borrowers](./image/get_members_topBorrowers.png)
 
+**4. GET /books/:id/ratings**
+
+Show average rating per book
+
+```sql
+SELECT * FROM Book;
+SELECT * FROM Review;
+SELECT * FROM Member_reviewed_books;
+
+SELECT B.BookID as 'Book ID', B.Title as 'Book Title', AVG(R.Rating) as 'Average Rating'
+FROM Book B INNER JOIN Member_reviewed_books MRB ON B.BookID = MRB.MemberID
+INNER JOIN Review R ON R.ReviewID = MRB.ReviewID
+GROUP BY B.BookID,  B.Title;
+```
+
+![GET /books/:id/ratings](./image/get_book_id_rating.png)
+
 

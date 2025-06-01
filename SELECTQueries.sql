@@ -17,3 +17,21 @@ SELECT * FROM Book WHERE Availability_Status = 'FALSE';
 
 --3. GET /members/top-borrowers → Members who borrowed >2 books 
 
+SELECT * FROM Member_books;
+SELECT * FROM Member;
+
+SELECT M.Full_Name as 'Member Name', COUNT(MB.MemberID) AS Total_Borrowed
+FROM Member M INNER JOIN Member_books MB ON M.MemberID = MB.MemberID
+GROUP BY M.MemberID, M.Full_Name
+HAVING COUNT(MB.MemberID) > 2;
+
+--4. GET /books/:id/ratings → Show average rating per book  
+
+SELECT * FROM Book;
+SELECT * FROM Review;
+SELECT * FROM Member_reviewed_books;
+
+SELECT B.BookID as 'Book ID', B.Title as 'Book Title', AVG(R.Rating) as 'Average Rating'
+FROM Book B INNER JOIN Member_reviewed_books MRB ON B.BookID = MRB.MemberID
+INNER JOIN Review R ON R.ReviewID = MRB.ReviewID
+GROUP BY B.BookID,  B.Title;
