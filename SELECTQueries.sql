@@ -132,3 +132,19 @@ WHERE L.LibraryID = '1';
 SELECT * FROM Book;
 
 SELECT * FROM Book WHERE Price >= 5 AND Price <= 15;
+
+--14. GET /loans/active → List all currently active loans (not yet returned) with member and book info 
+
+SELECT * FROM Book;
+SELECT * FROM Member;
+SELECT * FROM Loan;
+SELECT * FROM Member_books;
+
+SELECT L.LoanID as 'Loan ID',
+M.MemberID  as 'Member ID', M.Full_Name as 'Member Name', 
+B.BookID as 'Book ID', B.Title as 'Book Title', B.Genre as 'Book Genre', B.Price as 'Book Price', 
+MB.Status as 'Loan Status'
+FROM Loan L INNER JOIN Member_books MB ON L.LoanID = MB.LoanID
+INNER JOIN Member M ON M.MemberID = MB.MemberID
+INNER JOIN Book B ON B.BookID = MB.BookID
+WHERE MB.Status != 'Returned';
