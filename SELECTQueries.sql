@@ -8,3 +8,9 @@ FROM Loan L INNER JOIN Member_books MB ON L.LoanID = MB.LoanID
 INNER JOIN Book B ON B.BookID = MB.BookID
 INNER JOIN Member M ON M.MemberID = MB.MemberID
 WHERE MB.Status = 'Overdue';
+
+--GET /books/unavailable → List books not available  
+
+SELECT * FROM Book;
+
+SELECT * FROM Book WHERE Availability_Status = 'FALSE';

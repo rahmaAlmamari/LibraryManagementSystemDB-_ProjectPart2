@@ -20,3 +20,15 @@ WHERE MB.Status = 'Overdue';
 ```
 
 ![GET /loans/overdue](./image/get_loans_overdue.png)
+
+**2. GET /books/unavailable**
+
+ List books not available
+
+ ```sql
+ SELECT * FROM Book;
+
+SELECT * FROM Book WHERE Availability_Status = 'FALSE';
+ ```
+
+![GET /books/unavailable](./image/get_books_unavailable.png)
