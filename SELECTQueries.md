@@ -208,6 +208,18 @@ WHERE L.LibraryID = '1';
 
 **13. GET /books/price-range?min=5&max=15**
 
+Show books whose prices fall within a given range.
+
+```sql
+SELECT * FROM Book;
+
+SELECT * FROM Book WHERE Price >= 5 AND Price <= 15;
+```
+
+![GET /books/price-range?min=5&max=15](./image/get_books_price_range.png)
+
+
+
 
 
 

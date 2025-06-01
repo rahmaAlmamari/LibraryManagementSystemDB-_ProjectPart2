@@ -126,3 +126,9 @@ SELECT * FROM Library;
 SELECT S.Staff_ID as 'Staff ID', S.Full_Name as 'Staff Name', S.Position as 'Staff Position'
 FROM Library L INNER JOIN Staff S ON L.LibraryID = S.LibraryID
 WHERE L.LibraryID = '1';
+
+--13. GET /books/price-range?min=5&max=15 → Show books whose prices fall within a given range 
+
+SELECT * FROM Book;
+
+SELECT * FROM Book WHERE Price >= 5 AND Price <= 15;
