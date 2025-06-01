@@ -275,6 +275,23 @@ WHERE MRB.BookID  IS NULL;
 
 ![GET /books/never-reviewed](./image/get_books_never_reviewed.png)
 
+**17. GET /members/:id/loan-history**
+
+Show a member’s loan history with book titles and loan status. 
+
+```sql
+SELECT * FROM Book;
+SELECT * FROM Member;
+SELECT * FROM Loan;
+SELECT * FROM Member_books;
+
+SELECT L.*, B.Title as 'Book Title', MB.Status as 'Loan Status'
+FROM Loan L LEFT OUTER JOIN Member_books MB ON L.LoanID = MB.LoanID
+INNER JOIN Member M ON M.MemberID = MB.MemberID 
+INNER JOIN Book B ON B.BookID = MB.BookID;
+```
+
+![GET /members/:id/loan-history](./image/get_member_id_loan_history.png)
 
 
 

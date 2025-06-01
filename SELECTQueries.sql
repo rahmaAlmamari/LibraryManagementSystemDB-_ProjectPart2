@@ -171,3 +171,15 @@ SELECT * FROM Member_reviewed_books;
 SELECT B.*
 FROM Book B LEFT OUTER JOIN Member_reviewed_books MRB ON B.BookID = MRB.BookID
 WHERE MRB.BookID  IS NULL;
+
+--17. GET /members/:id/loan-history →Show a member’s loan history with book titles and loan status. 
+
+SELECT * FROM Book;
+SELECT * FROM Member;
+SELECT * FROM Loan;
+SELECT * FROM Member_books;
+
+SELECT L.*, B.Title as 'Book Title', MB.Status as 'Loan Status'
+FROM Loan L LEFT OUTER JOIN Member_books MB ON L.LoanID = MB.LoanID
+INNER JOIN Member M ON M.MemberID = MB.MemberID 
+INNER JOIN Book B ON B.BookID = MB.BookID;
