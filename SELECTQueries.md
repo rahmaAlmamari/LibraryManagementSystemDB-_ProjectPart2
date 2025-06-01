@@ -398,22 +398,24 @@ GROUP BY M.Full_Name;
 
 ![GET /members/:id/fines](./image/get_members_id_fines.png)
 
-**24. GET /books/popular**
+**24. GET /libraries/:id/book-stats**
 
-List top 3 books by number of times they were loaned.
+Show count of available and unavailable books in a library. 
 
 ```sql
 SELECT * FROM Book;
-SELECT * FROM Loan;
-SELECT * FROM Member_books;
+SELECT * FROM Library;
 
-SELECT B.BookID, B.Title, COUNT(MB.BookID) as 'Times a Book Loaned'
-FROM Book B INNER JOIN Member_books MB ON B.BookID = MB.BookID
-GROUP BY B.BookID, B.Title
-ORDER BY COUNT(MB.BookID);
+SELECT 
+L.LibraryID,
+SUM(CASE WHEN B.Availability_Status = 'TRUE' THEN 1 ELSE 0 END) AS AvailableBooks,
+SUM(CASE WHEN B.Availability_Status = 'FALSE' THEN 1 ELSE 0 END) AS UnavailableBooks
+FROM Library L INNER JOIN Book B ON L.LibraryID = B.LibraryID
+WHERE L.LibraryID = '1'
+GROUP BY L.LibraryID;
 ```
 
-![GET /books/popular](./image/get_books_popular2.png)
+![GET /libraries/:id/book-stats](./image/get_libraries_id_book_stats.png)
 
 
 
