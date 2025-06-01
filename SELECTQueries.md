@@ -66,4 +66,19 @@ GROUP BY B.BookID,  B.Title;
 
 ![GET /books/:id/ratings](./image/get_book_id_rating.png)
 
+**5. GET /libraries/:id/genres**
+
+ Count books by genre 
+
+ ```sql
+ SELECT * FROM Book;
+SELECT * FROM Library;
+
+SELECT L.LibraryID as 'Library ID', L.LibraryName as 'Library Name', B.Genre as 'Genre', COUNT(B.LibraryID) as 'Number of Books'
+FROM Library L INNER JOIN Book B ON L.LibraryID = B.LibraryID
+GROUP BY L.LibraryID, L.LibraryName, B.Genre;
+ ```
+
+![GET /libraries/:id/genres](./image/get_libraries_id_genres.png)
+
 

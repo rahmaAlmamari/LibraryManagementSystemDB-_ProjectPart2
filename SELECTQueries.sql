@@ -35,3 +35,12 @@ SELECT B.BookID as 'Book ID', B.Title as 'Book Title', AVG(R.Rating) as 'Average
 FROM Book B INNER JOIN Member_reviewed_books MRB ON B.BookID = MRB.MemberID
 INNER JOIN Review R ON R.ReviewID = MRB.ReviewID
 GROUP BY B.BookID,  B.Title;
+
+--5. GET /libraries/:id/genres → Count books by genre  
+
+SELECT * FROM Book;
+SELECT * FROM Library;
+
+SELECT L.LibraryID as 'Library ID', L.LibraryName as 'Library Name', B.Genre as 'Genre', COUNT(B.LibraryID) as 'Number of Books'
+FROM Library L INNER JOIN Book B ON L.LibraryID = B.LibraryID
+GROUP BY L.LibraryID, L.LibraryName, B.Genre;
