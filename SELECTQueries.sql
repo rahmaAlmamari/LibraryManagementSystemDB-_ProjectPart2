@@ -105,3 +105,15 @@ FROM Member M FULL OUTER JOIN Member_books MB ON M.MemberID = MB.MemberID
 FULL OUTER JOIN Book B ON B.BookID = MB.BookID
 FULL OUTER JOIN Loan L ON L.LoanID = MB.LoanID
 WHERE M.MemberID = '1';
+
+--11. GET /books/:id/reviews → Show all reviews for a book with member name and comments 
+
+SELECT * FROM Book;
+SELECT * FROM Member;
+SELECT * FROM Review;
+SELECT * FROM Member_reviewed_books;
+
+SELECT B.BookID as 'Book ID', B.Title as 'Book Title', M.Full_Name as 'Member Name', R.Comment as 'Comment'
+FROM Book B FULL OUTER JOIN Member_reviewed_books MRB ON B.BookID = MRB.BookID
+INNER JOIN Member M ON M.MemberID = MRB.MemberID
+INNER JOIN Review R ON R.ReviewID = MRB.ReviewID
