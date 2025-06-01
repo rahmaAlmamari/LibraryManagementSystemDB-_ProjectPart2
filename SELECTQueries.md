@@ -379,6 +379,24 @@ GROUP BY B.BookID, B.Title;
 
 ![GET /books/:id/loan-count](./image/get_books_id_loan_count.png)
 
+**23. GET /reviews**
+
+Reviews with member and book info
+
+```sql
+SELECT * FROM Book;
+SELECT * FROM Member;
+SELECT * FROM Review;
+SELECT * FROM Member_reviewed_books;
+
+SELECT R.*, M.Full_Name as 'Member Name', B.BookID, B.Title 
+FROM Review R INNER JOIN Member_reviewed_books MRB ON R.ReviewID = MRB.ReviewID
+INNER JOIN Book B ON B.BookID = MRB.BookID
+INNER JOIN Member M ON M.MemberID = MRB.MemberID;
+```
+
+![GET /reviews](./image/get_reviews2.png)
+
 
 
 

@@ -243,4 +243,16 @@ SELECT B.BookID, B.Title, COUNT(MB.BookID) as 'Times a Book Loaned'
 FROM Book B INNER JOIN Member_books MB ON B.BookID = MB.BookID
 GROUP BY B.BookID, B.Title;
 
+--23. GET /reviews → Reviews with member and book info 
+
+SELECT * FROM Book;
+SELECT * FROM Member;
+SELECT * FROM Review;
+SELECT * FROM Member_reviewed_books;
+
+SELECT R.*, M.Full_Name as 'Member Name', B.BookID, B.Title 
+FROM Review R INNER JOIN Member_reviewed_books MRB ON R.ReviewID = MRB.ReviewID
+INNER JOIN Book B ON B.BookID = MRB.BookID
+INNER JOIN Member M ON M.MemberID = MRB.MemberID;
+
 
