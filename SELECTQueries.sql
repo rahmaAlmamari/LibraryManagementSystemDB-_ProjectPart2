@@ -232,3 +232,15 @@ FROM Loan L LEFT OUTER JOIN Member_books MB ON L.LoanID = MB.LoanID
 INNER JOIN Member M ON M.MemberID =MB.MemberID
 INNER JOIN Book B ON B.BookID = MB.BookID
 WHERE MB.Status = 'overdue';
+
+--22. GET /books/:id/loan-count → Show how many times a book has been loaned. 
+
+SELECT * FROM Book;
+SELECT * FROM Loan;
+SELECT * FROM Member_books;
+
+SELECT B.BookID, B.Title, COUNT(MB.BookID) as 'Times a Book Loaned'
+FROM Book B INNER JOIN Member_books MB ON B.BookID = MB.BookID
+GROUP BY B.BookID, B.Title;
+
+
