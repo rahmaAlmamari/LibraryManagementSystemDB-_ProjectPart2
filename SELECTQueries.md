@@ -152,6 +152,27 @@ ORDER BY COUNT(MB.BookID);
 
 ![GET /books/popular](./image/get_books_popular.png)
 
+**10. GET /members/:id/history**
+
+Retrieve full loan history of a specific member including book title, 
+loan & return dates.
+
+```sql
+SELECT * FROM Loan;
+SELECT * FROM Member_books;
+SELECT * FROM Book;
+SELECT * FROM Member;
+
+
+SELECT B.Title as 'Book Title', L.LoanID as 'Loan ID', L.Return_Date as 'Return Date'
+FROM Member M FULL OUTER JOIN Member_books MB ON M.MemberID = MB.MemberID
+FULL OUTER JOIN Book B ON B.BookID = MB.BookID
+FULL OUTER JOIN Loan L ON L.LoanID = MB.LoanID
+WHERE M.MemberID = '1';
+```
+
+![GET /members/:id/history](./image/get_members_id_history.png)
+
 
 
 
