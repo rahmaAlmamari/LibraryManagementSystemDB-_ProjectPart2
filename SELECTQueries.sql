@@ -183,3 +183,13 @@ SELECT L.*, B.Title as 'Book Title', MB.Status as 'Loan Status'
 FROM Loan L LEFT OUTER JOIN Member_books MB ON L.LoanID = MB.LoanID
 INNER JOIN Member M ON M.MemberID = MB.MemberID 
 INNER JOIN Book B ON B.BookID = MB.BookID;
+
+--18. GET /members/inactive →List all members who have never borrowed any book. 
+
+SELECT * FROM Book;
+SELECT * FROM Member;
+SELECT * FROM Member_books;
+
+SELECT M.* 
+FROM Member M LEFT OUTER JOIN Member_books MB ON M.MemberID = MB.MemberID
+WHERE MB.MemberID IS NULL;

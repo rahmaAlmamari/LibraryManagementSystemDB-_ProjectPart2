@@ -293,6 +293,22 @@ INNER JOIN Book B ON B.BookID = MB.BookID;
 
 ![GET /members/:id/loan-history](./image/get_member_id_loan_history.png)
 
+**18. GET /members/inactive**
+
+List all members who have never borrowed any book.
+
+```sql
+SELECT * FROM Book;
+SELECT * FROM Member;
+SELECT * FROM Member_books;
+
+SELECT M.* 
+FROM Member M LEFT OUTER JOIN Member_books MB ON M.MemberID = MB.MemberID
+WHERE MB.MemberID IS NULL;
+```
+
+![GET /members/inactive](./image/get_members_inactive2.png)
+
 
 
 
