@@ -324,6 +324,26 @@ WHERE MB.BookID IS NULL;
 
 ![GET /books/never-loaned](./image/get_books_never_loaned.png)
 
+**20. GET /payments**
+
+List all payments with member name and book title. 
+
+```sql
+SELECT * FROM Book;
+SELECT * FROM Payment;
+SELECT * FROM Member;
+SELECT * FROM Loan;
+SELECT * FROM Member_books;
+
+SELECT P.*, M.Full_Name as 'Member Name', B.Title as 'Book Title'
+FROM Payment P LEFT OUTER JOIN Loan L ON L.LoanID = P.LoanID
+INNER JOIN Member_books MB ON L.LoanID = MB.LoanID
+INNER JOIN Member M ON M.MemberID =MB.MemberID
+INNER JOIN Book B ON B.BookID = MB.BookID;
+```
+
+![GET /payments](./image/get_payments.png)
+
 
 
 
