@@ -417,6 +417,24 @@ GROUP BY L.LibraryID;
 
 ![GET /libraries/:id/book-stats](./image/get_libraries_id_book_stats.png)
 
+**25. GET /reviews/top-rated**
+
+Return books with more than 5 reviews and average rating > 4.5
+
+```sql
+SELECT * FROM Book;
+SELECT * FROM Review;
+SELECT * FROM Member_reviewed_books;
+
+SELECT MRB.BookID, B.Title, COUNT(*) AS ReviewCount, AVG(R.Rating) AS AvgRating
+FROM Review R JOIN Member_reviewed_books MRB ON R.ReviewID = MRB.ReviewID
+JOIN Book B ON B.BookID = MRB.BookID
+GROUP BY MRB.BookID, B.Title
+HAVING COUNT(*) > 5 AND AVG(R.Rating) > 4.5;
+```
+
+![GET /reviews/top-rated](./image/get_reviews_top_rated.png)
+
 
 
 

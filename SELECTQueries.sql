@@ -271,16 +271,15 @@ WHERE L.LibraryID = '1'
 GROUP BY L.LibraryID;
 
 
---25. GET /members/:id/history → Retrieve full loan history of a specific member 
---    including book title, loan & return dates 
+--25. GET /reviews/top-rated → Return books with more than 5 reviews and average rating > 4.5. 
 
 SELECT * FROM Book;
-SELECT * FROM Member;
-SELECT * FROM Loan;
-SELECT * FROM Member_books;
+SELECT * FROM Review;
+SELECT * FROM Member_reviewed_books;
 
-SELECT L.*, B.Title as 'Book Title'
-FROM Loan L LEFT OUTER JOIN Member_books MB ON L.LoanID = MB.LoanID
-INNER JOIN Member M ON M.MemberID = MB.MemberID 
-INNER JOIN Book B ON B.BookID = MB.BookID
-WHERE M.MemberID = '1';
+SELECT MRB.BookID, B.Title, COUNT(*) AS ReviewCount, AVG(R.Rating) AS AvgRating
+FROM Review R JOIN Member_reviewed_books MRB ON R.ReviewID = MRB.ReviewID
+JOIN Book B ON B.BookID = MRB.BookID
+GROUP BY MRB.BookID, B.Title
+HAVING COUNT(*) > 5 AND AVG(R.Rating) > 4.5;
+
