@@ -191,6 +191,25 @@ INNER JOIN Review R ON R.ReviewID = MRB.ReviewID
 
 ![GET /books/:id/reviews](./image/get_books_id_reviews.png)
 
+**12. GET /libraries/:id/staff**
+
+List all staff working in a given library.
+
+```sql
+SELECT * FROM Staff;
+SELECT * FROM Library;
+
+SELECT S.Staff_ID as 'Staff ID', S.Full_Name as 'Staff Name', S.Position as 'Staff Position'
+FROM Library L INNER JOIN Staff S ON L.LibraryID = S.LibraryID
+WHERE L.LibraryID = '1';
+```
+
+![GET /libraries/:id/staff](./image/get_libraries_id_staff.png)
+
+**13. GET /books/price-range?min=5&max=15**
+
+
+
 
 
 

@@ -117,3 +117,12 @@ SELECT B.BookID as 'Book ID', B.Title as 'Book Title', M.Full_Name as 'Member Na
 FROM Book B FULL OUTER JOIN Member_reviewed_books MRB ON B.BookID = MRB.BookID
 INNER JOIN Member M ON M.MemberID = MRB.MemberID
 INNER JOIN Review R ON R.ReviewID = MRB.ReviewID
+
+--12. GET /libraries/:id/staff → List all staff working in a given library 
+
+SELECT * FROM Staff;
+SELECT * FROM Library;
+
+SELECT S.Staff_ID as 'Staff ID', S.Full_Name as 'Staff Name', S.Position as 'Staff Position'
+FROM Library L INNER JOIN Staff S ON L.LibraryID = S.LibraryID
+WHERE L.LibraryID = '1';
