@@ -344,6 +344,25 @@ INNER JOIN Book B ON B.BookID = MB.BookID;
 
 ![GET /payments](./image/get_payments.png)
 
+**21. GET /loans/overdue**
+
+List all overdue loans with member and book details. 
+
+```sql
+SELECT * FROM Book;
+SELECT * FROM Member;
+SELECT * FROM Loan;
+SELECT * FROM Member_books;
+
+SELECT L.*, M.Full_Name as 'Member Name', B.BookID, B.Title as 'Book Title'
+FROM Loan L LEFT OUTER JOIN Member_books MB ON L.LoanID = MB.LoanID
+INNER JOIN Member M ON M.MemberID =MB.MemberID
+INNER JOIN Book B ON B.BookID = MB.BookID
+WHERE MB.Status = 'overdue';
+```
+
+![GET /loans/overdue](./image/get_loans_overdue2.png)
+
 
 
 

@@ -1,4 +1,7 @@
-﻿-- 1. GET /loans/overdue → List all overdue loans with member name, book title, due date 
+﻿--Use DB
+USE LibraryManagementSystem;
+
+-- 1. GET /loans/overdue → List all overdue loans with member name, book title, due date 
 SELECT * FROM Member_books;
 SELECT * FROM Loan;
 SELECT * FROM Member;
@@ -216,3 +219,16 @@ FROM Payment P LEFT OUTER JOIN Loan L ON L.LoanID = P.LoanID
 INNER JOIN Member_books MB ON L.LoanID = MB.LoanID
 INNER JOIN Member M ON M.MemberID =MB.MemberID
 INNER JOIN Book B ON B.BookID = MB.BookID;
+
+--21. GET /loans/overdue→ List all overdue loans with member and book details. 
+
+SELECT * FROM Book;
+SELECT * FROM Member;
+SELECT * FROM Loan;
+SELECT * FROM Member_books;
+
+SELECT L.*, M.Full_Name as 'Member Name', B.BookID, B.Title as 'Book Title'
+FROM Loan L LEFT OUTER JOIN Member_books MB ON L.LoanID = MB.LoanID
+INNER JOIN Member M ON M.MemberID =MB.MemberID
+INNER JOIN Book B ON B.BookID = MB.BookID
+WHERE MB.Status = 'overdue';
