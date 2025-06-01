@@ -397,6 +397,23 @@ INNER JOIN Member M ON M.MemberID = MRB.MemberID;
 
 ![GET /reviews](./image/get_reviews2.png)
 
+**24. GET /books/popular**
+
+List top 3 books by number of times they were loaned.
+
+```sql
+SELECT * FROM Book;
+SELECT * FROM Loan;
+SELECT * FROM Member_books;
+
+SELECT B.BookID, B.Title, COUNT(MB.BookID) as 'Times a Book Loaned'
+FROM Book B INNER JOIN Member_books MB ON B.BookID = MB.BookID
+GROUP BY B.BookID, B.Title
+ORDER BY COUNT(MB.BookID);
+```
+
+![GET /books/popular](./image/get_books_popular2.png)
+
 
 
 
