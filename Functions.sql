@@ -189,6 +189,34 @@ RETURN
 
 SELECT * FROM dbo.fn_GetTopRatedBooks();
 
+--8. fn_FormatMemberName 
+--Returns the full name formatted as "LastName, FirstName"
+
+CREATE FUNCTION fn_FormatMemberName (
+    @MemberID INT
+)
+RETURNS VARCHAR(255)
+AS
+BEGIN
+    DECLARE @FormattedName VARCHAR(255);
+
+    SELECT @FormattedName = 
+        CASE 
+            WHEN CHARINDEX(' ', M.Full_Name) > 0 THEN
+                RIGHT(M.Full_Name, LEN(M.Full_Name) - CHARINDEX(' ', M.Full_Name)) + ', ' + 
+                LEFT(M.Full_Name, CHARINDEX(' ', M.Full_Name) - 1)
+            ELSE
+                M.Full_Name  -- If only one name exists
+        END
+    FROM Member M
+    WHERE M.MemberID = @MemberID;
+
+    RETURN @FormattedName;
+END;
+
+--to run fn_FormatMemberName
+
+SELECT dbo.fn_FormatMemberName(1) AS FormattedName;
 
 
 
