@@ -54,6 +54,43 @@ END;
 
 SELECT dbo.GetNextAvailableBook('Fiction', 'Harry Potter', 1) AS NextBookID;
 
+--3. CalculateLibraryOccupancyRate(LibraryID) 
+--Returns % of books currently issued 
+
+CREATE FUNCTION CalculateLibraryOccupancyRate (
+    @LibraryID INT
+)
+RETURNS FLOAT
+AS
+BEGIN
+    DECLARE @TotalBooks INT;
+    DECLARE @IssuedBooks INT;
+    DECLARE @OccupancyRate FLOAT;
+
+    -- Count total books in the library
+    SELECT @TotalBooks = COUNT(*)
+    FROM Book B
+    WHERE B.LibraryID = @LibraryID;
+
+    -- Count books that are not available (assumed 'FALSE' = issued)
+    SELECT @IssuedBooks = COUNT(*)
+    FROM Book B
+    WHERE B.LibraryID = @LibraryID AND B.Availability_Status = 'FALSE';
+
+    -- Calculate occupancy rate (avoid division by zero)
+    SET @OccupancyRate = 
+        CASE 
+            WHEN @TotalBooks = 0 THEN 0 
+            ELSE CAST(@IssuedBooks AS FLOAT) * 100 / @TotalBooks 
+        END;
+
+    RETURN @OccupancyRate;
+END;
+
+--to run CalculateLibraryOccupancyRate
+
+SELECT dbo.CalculateLibraryOccupancyRate(1) AS OccupancyRate;
+
 
 
 
