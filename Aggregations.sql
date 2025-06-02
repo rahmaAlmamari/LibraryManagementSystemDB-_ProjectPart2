@@ -21,3 +21,20 @@ JOIN Payment P ON P.LoanID = L.LoanID
 WHERE P.Method = 'Fine'
 GROUP BY M.MemberID, M.Full_Name
 ORDER BY TotalFines DESC;
+
+--2. Most active libraries (by loan count) 
+SELECT 
+    L.LibraryID,
+    L.LibraryName,
+    COUNT(DISTINCT LN.LoanID) AS TotalLoans,
+    MAX(LN.LoanID) AS MaxLoanID,
+    AVG(CAST(DATEDIFF(DAY, LN.Loan_Date, LN.Return_Date) AS FLOAT)) AS AvgLoanDurationDays
+FROM Library L
+JOIN Book B ON B.LibraryID = L.LibraryID
+JOIN Member_books MB ON MB.BookID = B.BookID
+JOIN Loan LN ON LN.LoanID = MB.LoanID
+GROUP BY L.LibraryID, L.LibraryName
+ORDER BY TotalLoans DESC;
+
+--3. 
+
