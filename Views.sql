@@ -37,6 +37,18 @@ GROUP BY M.MemberID, M.Full_Name;
 
 SELECT * FROM ViewMemberLoanSummary;
 
+--3. ViewAvailableBooks 
+--Available books grouped by genre, ordered by price 
+
+CREATE VIEW ViewAvailableBooks AS
+SELECT B.Genre, B.BookID, B.Title, B.Price, B.Availability_Status
+FROM Book B
+WHERE B.Availability_Status = 'TRUE';
+
+--to run ViewAvailableBooks
+
+SELECT * FROM ViewAvailableBooks
+ORDER BY Genre, Price;
 
 
 
