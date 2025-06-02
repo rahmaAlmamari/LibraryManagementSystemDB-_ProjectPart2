@@ -219,8 +219,44 @@ END;
 SELECT dbo.fn_FormatMemberName(1) AS FormattedName;
 
 
+-- Q/ Where would such functions be used in a frontend (e.g., member profile, book search, admin analytics)? 
 
+--1. fn_GetMemberLoanCount
+--Use in Frontend:
+--1.1. Member Profile Page → Show total books borrowed.
+--1.2.Admin Dashboard → Highlight most active members.
 
+-- 2. fn_GetBookAverageRating(BookID)
+--Use in Frontend:
+--2.1. Book Detail Page → Show average rating prominently.
+--2.2. Book Search Results → Add star ratings beside titles.
 
+--3. fn_ListAvailableBooksByLibrary(LibraryID)
+--Use in Frontend:
+--3.1. Library Catalog Page → Display only available books for borrowing.
+--3.2. Staff System → Help with re-stocking and circulation decisions.
 
+--4. fn_GetTopRatedBooks()
+--Use in Frontend:
+--4.1. Homepage "Recommended" Section → Feature books with high ratings.
+--4.2. Genre Browsing → Highlight critically loved books.
 
+--5. fn_GetLateReturnDays(LoanID)
+--Use in Frontend:
+--5.1. User Loan History → Mark overdue books and late days.
+--5.2. Fine Calculation Page → Trigger fine estimations for late returns.
+
+--6. CalculateLibraryOccupancyRate(LibraryID)
+--Use in Frontend:
+--6.1. Admin Analytics Panel → Visual gauge of library book usage.
+--6.2. Library Performance Reports → Help optimize inventory.
+
+--7. GetNextAvailableBook(Genre, Title, LibraryID)
+--Use in Frontend:
+--7.1. Book Reservation System → Suggest next available copy if the desired one is unavailable.
+--7.2. Waiting List Management → Automatically notify when a copy is ready.
+
+--8. fn_FormatMemberName(MemberID)
+--Use in Frontend:
+--8.1. Admin Lists or Reports → Display names in consistent, professional format (LastName, FirstName).
+--8.2. Email Templates / Letters → Use formatted names in formal communication.
