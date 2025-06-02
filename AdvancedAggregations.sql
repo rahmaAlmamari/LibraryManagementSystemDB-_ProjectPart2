@@ -63,4 +63,17 @@ GROUP BY M.MemberID, M.Full_Name
 HAVING COALESCE(SUM(P.Amount), 0) = 0
 ORDER BY TotalLoans DESC;
 
+--5. Genres with high average ratings 
+SELECT
+    B.Genre,
+    AVG(CAST(R.Rating AS FLOAT)) AS AvgRating,
+    COUNT(R.ReviewID) AS ReviewCount,
+    MAX(R.Rating) AS MaxRating,
+    MIN(R.Rating) AS MinRating
+FROM Book B
+JOIN Member_reviewed_books MRB ON MRB.BookID = B.BookID
+JOIN Review R ON R.ReviewID = MRB.ReviewID
+GROUP BY B.Genre
+HAVING AVG(CAST(R.Rating AS FLOAT)) >= 4.5
+ORDER BY AvgRating DESC;
 
