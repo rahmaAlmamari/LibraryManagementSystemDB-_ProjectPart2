@@ -70,5 +70,23 @@ GROUP BY L.LibraryID, L.LibraryName;
 
 SELECT * FROM ViewLoanStatusSummary;
 
+--5. ViewPaymentOverview 
+--Payment info with member, book, and status 
+
+CREATE VIEW ViewPaymentOverview AS
+SELECT P.PaymentID, P.Method, P.Amount, P.Payment_Date,
+M.MemberID, M.Full_Name AS MemberName,
+B.BookID, B.Title AS BookTitle,
+MB.Status AS LoanStatus,
+LN.Loan_Date, LN.Due_Date, LN.Return_Date
+FROM Payment P JOIN Loan LN ON P.LoanID = LN.LoanID
+JOIN Member_books MB ON LN.LoanID = MB.LoanID
+JOIN Member M ON MB.MemberID = M.MemberID
+JOIN Book B ON MB.BookID = B.BookID;
+
+--to run ViewPaymentOverview
+
+SELECT * FROM ViewPaymentOverview;
+
 
 
