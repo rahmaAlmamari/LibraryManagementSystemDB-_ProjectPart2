@@ -36,5 +36,15 @@ JOIN Loan LN ON LN.LoanID = MB.LoanID
 GROUP BY L.LibraryID, L.LibraryName
 ORDER BY TotalLoans DESC;
 
---3. 
+--3. Avg book price per genre 
+SELECT 
+    B.Genre,
+    AVG(CAST(B.Price AS FLOAT)) AS AvgBookPrice,
+    MAX(B.Price) AS MaxBookPrice,
+    MIN(B.Price) AS MinBookPrice,
+    COUNT(B.BookID) AS NumberOfBooks
+FROM Book B
+GROUP BY B.Genre
+ORDER BY AvgBookPrice DESC;
+
 
