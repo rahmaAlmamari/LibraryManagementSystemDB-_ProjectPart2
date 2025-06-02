@@ -48,5 +48,29 @@ END;
 
 EXEC sp_UpdateLoanStatus;
 
+--3. sp_RankMembersByFines() 
+--Ranks members by total fines paid 
+
+CREATE PROCEDURE sp_RankMembersByFines
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        MB.MemberID,
+        SUM(P.Amount) AS TotalFinesPaid,
+        RANK() OVER (ORDER BY SUM(P.Amount) DESC) AS FineRank
+    FROM Payment P
+    JOIN Loan L ON P.LoanID = L.LoanID
+    JOIN Member_books MB ON L.LoanID = MB.LoanID
+    GROUP BY MB.MemberID;
+END;
+
+--to Execute sp_RankMembersByFines
+
+EXEC sp_RankMembersByFines;
+
+
+
 
 
