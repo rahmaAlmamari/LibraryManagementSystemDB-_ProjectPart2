@@ -27,4 +27,10 @@ ON Book (LibraryID, ISBN);
 CREATE NONCLUSTERED INDEX IX_Book_Genre
 ON Book (Genre);
 
+--3. Loan Table 
+--3.1. Non-clustered on MemberID → Loan history 
+
+CREATE NONCLUSTERED INDEX IX_Member_books_MemberID
+ON Member_books (MemberID);
+
 
