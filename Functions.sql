@@ -113,6 +113,32 @@ END;
 
 SELECT dbo.fn_GetMemberLoanCount(1) AS TotalLoans;
 
+--5. fn_GetLateReturnDays 
+--Return the number of late days for a loan (0 if not late). 
+
+CREATE FUNCTION fn_GetLateReturnDays (
+    @LoanID INT
+)
+RETURNS INT
+AS
+BEGIN
+    DECLARE @LateDays INT;
+
+    SELECT @LateDays = 
+        CASE 
+            WHEN L.Return_Date > L.Due_Date THEN DATEDIFF(DAY, L.Due_Date, L.Return_Date)
+            ELSE 0
+        END
+    FROM Loan L
+    WHERE L.LoanID = @LoanID;
+
+    RETURN ISNULL(@LateDays, 0);
+END;
+
+--to run fn_GetLateReturnDays
+
+SELECT dbo.fn_GetLateReturnDays(101) AS LateDays;
+
 
 
 
