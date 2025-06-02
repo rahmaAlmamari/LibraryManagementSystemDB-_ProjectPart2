@@ -38,5 +38,11 @@ ON Member_books (MemberID);
 CREATE NONCLUSTERED INDEX IX_Member_books_Status
 ON Member_books (Status);
 
+--3.3. Composite index on BookID, LoanDate, ReturnDate → Optimize overdue checks 
+
+CREATE NONCLUSTERED INDEX IX_Loan_Book_LoanDate_ReturnDate
+ON Loan (Loan_Date, Return_Date);
+
+
 
 
