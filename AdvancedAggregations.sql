@@ -49,3 +49,18 @@ LEFT JOIN Member_books MB ON MB.BookID = B.BookID
 GROUP BY L.LibraryID, L.LibraryName
 ORDER BY OccupancyRatePercentage DESC;
 
+--4. Members with loans but no fine
+SELECT 
+    M.MemberID,
+    M.Full_Name,
+    COUNT(DISTINCT MB.LoanID) AS TotalLoans,
+    COALESCE(SUM(P.Amount), 0) AS TotalFinesPaid
+FROM Member M
+JOIN Member_books MB ON MB.MemberID = M.MemberID
+JOIN Loan LN ON LN.LoanID = MB.LoanID
+LEFT JOIN Payment P ON P.LoanID = LN.LoanID
+GROUP BY M.MemberID, M.Full_Name
+HAVING COALESCE(SUM(P.Amount), 0) = 0
+ORDER BY TotalLoans DESC;
+
+
