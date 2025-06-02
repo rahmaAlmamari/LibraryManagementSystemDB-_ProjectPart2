@@ -61,3 +61,20 @@ JOIN Review R ON R.ReviewID = MRB.ReviewID
 GROUP BY B.BookID, B.Title
 ORDER BY ReviewCount DESC;
 
+--5. Library revenue report 
+SELECT
+    L.LibraryID,
+    L.LibraryName,
+    COUNT(DISTINCT LN.LoanID) AS TotalLoans,
+    COUNT(DISTINCT P.PaymentID) AS TotalPayments,
+    SUM(P.Amount) AS TotalRevenue,
+    AVG(P.Amount) AS AvgPaymentAmount,
+    MAX(P.Amount) AS MaxPaymentAmount
+FROM Library L
+LEFT JOIN Book B ON B.LibraryID = L.LibraryID
+LEFT JOIN Member_books MB ON MB.BookID = B.BookID
+LEFT JOIN Loan LN ON LN.LoanID = MB.LoanID
+LEFT JOIN Payment P ON P.LoanID = LN.LoanID
+GROUP BY L.LibraryID, L.LibraryName
+ORDER BY TotalRevenue DESC;
+
