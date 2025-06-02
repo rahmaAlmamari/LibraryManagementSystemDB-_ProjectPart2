@@ -50,5 +50,25 @@ WHERE B.Availability_Status = 'TRUE';
 SELECT * FROM ViewAvailableBooks
 ORDER BY Genre, Price;
 
+--4. ViewLoanStatusSummary 
+--Loan stats (issued, returned, overdue) per library 
+
+CREATE VIEW ViewLoanStatusSummary AS
+SELECT L.LibraryID, L.LibraryName, 
+-- Count of Issued loans
+COUNT(CASE WHEN MB.Status = 'Issued' THEN 1 END) AS IssuedCount, 
+-- Count of Returned loans
+COUNT(CASE WHEN MB.Status = 'Returned' THEN 1 END) AS ReturnedCount,
+-- Count of Overdue loans: Return_Date > Due_Date
+COUNT(CASE WHEN MB.Status = 'Issued' AND LN.Return_Date > LN.Due_Date THEN 1 END) AS OverdueCount
+FROM Library L LEFT JOIN Book B ON L.LibraryID = B.LibraryID
+LEFT JOIN Member_books MB ON B.BookID = MB.BookID
+LEFT JOIN Loan LN ON MB.LoanID = LN.LoanID
+GROUP BY L.LibraryID, L.LibraryName;
+
+--to run ViewLoanStatusSummary
+
+SELECT * FROM ViewLoanStatusSummary;
+
 
 
