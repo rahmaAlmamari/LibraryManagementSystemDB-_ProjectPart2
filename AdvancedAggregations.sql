@@ -33,4 +33,19 @@ WHERE B.Price = (
 )
 ORDER BY B.Genre, B.Price DESC;
 
+--3. Occupancy rate calculations 
+SELECT
+    L.LibraryID,
+    L.LibraryName,
+    COUNT(B.BookID) AS TotalBooks,
+    COUNT(CASE WHEN MB.Status = 'Issued' THEN 1 END) AS IssuedBooks,
+    CASE 
+        WHEN COUNT(B.BookID) = 0 THEN 0
+        ELSE CAST(COUNT(CASE WHEN MB.Status = 'Issued' THEN 1 END) AS FLOAT) / COUNT(B.BookID) * 100
+    END AS OccupancyRatePercentage
+FROM Library L
+LEFT JOIN Book B ON B.LibraryID = L.LibraryID
+LEFT JOIN Member_books MB ON MB.BookID = B.BookID
+GROUP BY L.LibraryID, L.LibraryName
+ORDER BY OccupancyRatePercentage DESC;
 
