@@ -65,6 +65,34 @@ BEGIN
     ) T ON LR.LibraryID = T.LibraryID;
 END;
 
+--3. trg_LoanDateValidation 
+--Prevents invalid return dates on insert
+
+CREATE TRIGGER trg_LoanDateValidation
+ON Loan
+INSTEAD OF INSERT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Validate: Return_Date should not be earlier than Loan_Date or Due_Date
+    IF EXISTS (
+        SELECT 1
+        FROM INSERTED INS
+        WHERE INS.Return_Date < INS.Loan_Date
+           OR INS.Return_Date < INS.Due_Date
+    )
+    BEGIN
+        RAISERROR('Invalid Return_Date: It cannot be earlier than Loan_Date or Due_Date.', 16, 1);
+        ROLLBACK;
+        RETURN;
+    END
+
+    -- If valid, insert the rows
+    INSERT INTO Loan (Loan_Date, Due_Date, Return_Date)
+    SELECT Loan_Date, Due_Date, Return_Date
+    FROM INSERTED;
+END;
 
 
 
