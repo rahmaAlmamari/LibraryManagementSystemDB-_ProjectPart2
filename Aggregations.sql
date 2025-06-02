@@ -78,3 +78,18 @@ LEFT JOIN Payment P ON P.LoanID = LN.LoanID
 GROUP BY L.LibraryID, L.LibraryName
 ORDER BY TotalRevenue DESC;
 
+--6. Member activity summary (loan + fines) 
+SELECT
+    M.MemberID,
+    M.Full_Name,
+    COUNT(DISTINCT MB.LoanID) AS TotalLoans,
+    COUNT(DISTINCT P.PaymentID) AS TotalPayments,
+    SUM(P.Amount) AS TotalFinesPaid,
+    AVG(P.Amount) AS AvgFineAmount,
+    MAX(P.Amount) AS MaxFinePaid
+FROM Member M
+LEFT JOIN Member_books MB ON MB.MemberID = M.MemberID
+LEFT JOIN Loan LN ON LN.LoanID = MB.LoanID
+LEFT JOIN Payment P ON P.LoanID = LN.LoanID
+GROUP BY M.MemberID, M.Full_Name
+ORDER BY TotalLoans DESC;
