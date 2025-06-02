@@ -139,6 +139,32 @@ END;
 
 SELECT dbo.fn_GetLateReturnDays(101) AS LateDays;
 
+--6. fn_ListAvailableBooksByLibrary 
+--Returns a table of available books from a specific library. 
+
+CREATE FUNCTION fn_ListAvailableBooksByLibrary (
+    @LibraryID INT
+)
+RETURNS TABLE
+AS
+RETURN
+(
+    SELECT 
+        B.BookID,
+        B.Title,
+        B.Genre,
+        B.Shelf_Location,
+        B.Price,
+        B.Availability_Status
+    FROM Book B
+    WHERE B.LibraryID = @LibraryID
+      AND B.Availability_Status = 'TRUE'
+);
+
+--to run fn_ListAvailableBooksByLibrary
+
+SELECT * FROM dbo.fn_ListAvailableBooksByLibrary(2);
+
 
 
 
