@@ -1,4 +1,4 @@
---Functions � Reusable Logic 
+﻿--Functions – Reusable Logic 
 --User-defined functions for encapsulated logic 
 
 --USE DB
@@ -164,6 +164,32 @@ RETURN
 --to run fn_ListAvailableBooksByLibrary
 
 SELECT * FROM dbo.fn_ListAvailableBooksByLibrary(2);
+
+--7. fn_GetTopRatedBooks 
+--Returns books with average rating ≥ 4.5 
+
+CREATE FUNCTION fn_GetTopRatedBooks()
+RETURNS TABLE
+AS
+RETURN
+(
+    SELECT 
+        B.BookID,
+        B.Title,
+        B.Genre,
+        AVG(R.Rating) AS AverageRating
+    FROM Book B
+    JOIN Member_reviewed_books MRB ON B.BookID = MRB.BookID
+    JOIN Review R ON MRB.ReviewID = R.ReviewID
+    GROUP BY B.BookID, B.Title, B.Genre
+    HAVING AVG(R.Rating) >= 4.5
+);
+
+--to run fn_GetTopRatedBooks
+
+SELECT * FROM dbo.fn_GetTopRatedBooks();
+
+
 
 
 
