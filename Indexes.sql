@@ -10,3 +10,8 @@ USE LibraryManagementSystem;
 
 CREATE NONCLUSTERED INDEX IX_Library_LibraryName
 ON Library (LibraryName);
+
+--1.2. Non-clustered on Location → Filter by location 
+
+CREATE NONCLUSTERED INDEX IX_Library_LibraryLocation
+ON Library (LibraryLocation);
