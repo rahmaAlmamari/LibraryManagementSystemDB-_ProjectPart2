@@ -91,6 +91,30 @@ END;
 
 SELECT dbo.CalculateLibraryOccupancyRate(1) AS OccupancyRate;
 
+--4. fn_GetMemberLoanCount 
+--Return the total number of loans made by a given member. 
+
+CREATE FUNCTION fn_GetMemberLoanCount (
+    @MemberID INT
+)
+RETURNS INT
+AS
+BEGIN
+    DECLARE @TotalLoans INT;
+
+    SELECT @TotalLoans = COUNT(DISTINCT MB.LoanID)
+    FROM Member_books MB
+    WHERE MB.MemberID = @MemberID;
+
+    RETURN ISNULL(@TotalLoans, 0);
+END;
+
+--to run fn_GetMemberLoanCount
+
+SELECT dbo.fn_GetMemberLoanCount(1) AS TotalLoans;
+
+
+
 
 
 
