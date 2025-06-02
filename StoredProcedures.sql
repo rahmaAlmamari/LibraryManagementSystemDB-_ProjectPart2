@@ -21,3 +21,32 @@ END;
 --to Execute sp_MarkBookUnavailable(BookID) 
 EXEC sp_MarkBookUnavailable @BookID = 123;
 
+--2. sp_UpdateLoanStatus() 
+--Checks dates and updates loan statuses 
+
+CREATE PROCEDURE sp_UpdateLoanStatus
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Update status to 'Overdue' where Return_Date < GETDATE()
+    UPDATE MB
+    SET MB.Status = 'Overdue'
+    FROM Member_books MB
+    JOIN Loan L ON MB.LoanID = L.LoanID
+    WHERE L.Return_Date < GETDATE();
+
+    -- Update status to 'Returned' where Return_Date >= GETDATE()
+    UPDATE MB
+    SET MB.Status = 'Returned'
+    FROM Member_books MB
+    JOIN Loan L ON MB.LoanID = L.LoanID
+    WHERE L.Return_Date >= GETDATE();
+END;
+
+--to Execute sp_UpdateLoanStatus
+
+EXEC sp_UpdateLoanStatus;
+
+
+
