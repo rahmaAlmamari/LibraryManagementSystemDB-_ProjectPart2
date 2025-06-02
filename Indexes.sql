@@ -15,3 +15,12 @@ ON Library (LibraryName);
 
 CREATE NONCLUSTERED INDEX IX_Library_LibraryLocation
 ON Library (LibraryLocation);
+
+--2. Book Table 
+--2.1. Clustered on LibraryID, ISBN → Lookup by book in specific library 
+
+CREATE NONCLUSTERED INDEX IX_Book_LibraryID_ISBN
+ON Book (LibraryID, ISBN);
+
+--2.2. 
+
