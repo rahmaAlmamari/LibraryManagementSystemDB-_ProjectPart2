@@ -47,4 +47,17 @@ FROM Book B
 GROUP BY B.Genre
 ORDER BY AvgBookPrice DESC;
 
+--4. Top 3 most reviewed books 
+SELECT TOP 3
+    B.BookID,
+    B.Title,
+    COUNT(MRB.ReviewID) AS ReviewCount,
+    AVG(R.Rating) AS AvgRating,
+    MAX(R.Rating) AS MaxRating,
+    MIN(R.Rating) AS MinRating
+FROM Book B
+JOIN Member_reviewed_books MRB ON MRB.BookID = B.BookID
+JOIN Review R ON R.ReviewID = MRB.ReviewID
+GROUP BY B.BookID, B.Title
+ORDER BY ReviewCount DESC;
 
