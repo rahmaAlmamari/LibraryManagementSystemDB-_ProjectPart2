@@ -25,5 +25,35 @@ END;
 
 SELECT dbo.GetBookAverageRating(123) AS AverageRating;
 
+--2. GetNextAvailableBook(Genre, Title, LibraryID) 
+--Fetches the next available book 
+
+CREATE FUNCTION GetNextAvailableBook (
+    @Genre VARCHAR(255),
+    @Title VARCHAR(255),
+    @LibraryID INT
+)
+RETURNS INT
+AS
+BEGIN
+    DECLARE @NextBookID INT;
+
+    SELECT TOP 1 @NextBookID = B.BookID
+    FROM Book B
+    WHERE 
+        B.Genre = @Genre AND
+        B.Title = @Title AND
+        B.LibraryID = @LibraryID AND
+        B.Availability_Status = 'TRUE'
+    ORDER BY B.BookID;
+
+    RETURN @NextBookID;
+END;
+
+--to call GetNextAvailableBook
+
+SELECT dbo.GetNextAvailableBook('Fiction', 'Harry Potter', 1) AS NextBookID;
+
+
 
 
