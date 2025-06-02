@@ -21,4 +21,22 @@ HAVING AVG(R.Rating) > 4.5;
 
 SELECT * FROM ViewPopularBooks;
 
+--2. ViewMemberLoanSummary 
+--Member loan count + total fines paid 
+
+CREATE VIEW ViewMemberLoanSummary AS
+SELECT M.MemberID, M.Full_Name,
+COUNT(DISTINCT MB.LoanID) AS TotalLoans,
+ISNULL(SUM(P.Amount), 0) AS TotalFinesPaid
+FROM Member M LEFT JOIN Member_books MB ON M.MemberID = MB.MemberID
+LEFT JOIN Loan L ON MB.LoanID = L.LoanID
+LEFT JOIN Payment P ON L.LoanID = P.LoanID
+GROUP BY M.MemberID, M.Full_Name;
+
+--to run ViewMemberLoanSummary
+
+SELECT * FROM ViewMemberLoanSummary;
+
+
+
 
