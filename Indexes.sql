@@ -33,4 +33,10 @@ ON Book (Genre);
 CREATE NONCLUSTERED INDEX IX_Member_books_MemberID
 ON Member_books (MemberID);
 
+--3.2. Non-clustered on Status → Filter by status 
+
+CREATE NONCLUSTERED INDEX IX_Member_books_Status
+ON Member_books (Status);
+
+
 
