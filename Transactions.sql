@@ -244,78 +244,75 @@ ALTER COLUMN Return_Date DATE NULL;
 --4. Batch loan insert with rollback on failure 
 
 -- Step 0: Declare and populate input batch table
-DECLARE @LoanInputs TABLE (
-    MemberID INT,
-    BookID INT
-);
+--DECLARE @LoanInputs TABLE (
+--    MemberID INT,
+--    BookID INT
+--);
 
--- Sample batch (adjust as needed)
-INSERT INTO @LoanInputs VALUES (1, 2), (1, 3);
+---- Sample batch (adjust as needed)
+--INSERT INTO @LoanInputs VALUES (1, 2), (1, 3);
 
--- ===============================
--- Transaction with Cursor + Logs
--- ===============================
-BEGIN TRANSACTION;
+--BEGIN TRANSACTION;
 
-DECLARE @CurrLoanID INT;
-DECLARE @CurrMemberID INT;
-DECLARE @CurrBookID INT;
+--DECLARE @CurrLoanID INT;
+--DECLARE @CurrMemberID INT;
+--DECLARE @CurrBookID INT;
 
-DECLARE loan_cursor CURSOR FOR
-    SELECT MemberID, BookID FROM @LoanInputs;
+--DECLARE loan_cursor CURSOR FOR
+--    SELECT MemberID, BookID FROM @LoanInputs;
 
-OPEN loan_cursor;
+--OPEN loan_cursor;
 
-FETCH NEXT FROM loan_cursor INTO @CurrMemberID, @CurrBookID;
+--FETCH NEXT FROM loan_cursor INTO @CurrMemberID, @CurrBookID;
 
-WHILE @@FETCH_STATUS = 0
-BEGIN
-    PRINT '----------------------------------------'
-    PRINT 'Trying MemberID = ' + CAST(@CurrMemberID AS VARCHAR) + ', BookID = ' + CAST(@CurrBookID AS VARCHAR)
+--WHILE @@FETCH_STATUS = 0
+--BEGIN
+--    PRINT '----------------------------------------'
+--    PRINT 'Trying MemberID = ' + CAST(@CurrMemberID AS VARCHAR) + ', BookID = ' + CAST(@CurrBookID AS VARCHAR)
 
-    -- Step 1: Insert LOAN
-    BEGIN TRY
-        INSERT INTO LOAN (Loan_Date, Due_Date, Return_Date)
-        VALUES (GETDATE(), DATEADD(DAY, 14, GETDATE()), DATEADD(DAY, 20, GETDATE()));
+--    -- Step 1: Insert LOAN
+--    BEGIN TRY
+--        INSERT INTO LOAN (Loan_Date, Due_Date, Return_Date)
+--        VALUES (GETDATE(), DATEADD(DAY, 14, GETDATE()), DATEADD(DAY, 20, GETDATE()));
 
-        SET @CurrLoanID = SCOPE_IDENTITY();
+--        SET @CurrLoanID = SCOPE_IDENTITY();
 
-        IF @CurrLoanID IS NULL
-        BEGIN
-            THROW 50010, 'LoanID not generated. Insert into LOAN failed.', 1;
-        END
+--        IF @CurrLoanID IS NULL
+--        BEGIN
+--            THROW 50010, 'LoanID not generated. Insert into LOAN failed.', 1;
+--        END
 
-        PRINT 'Inserted LOAN. LoanID = ' + CAST(@CurrLoanID AS VARCHAR);
+--        PRINT 'Inserted LOAN. LoanID = ' + CAST(@CurrLoanID AS VARCHAR);
 
-        -- Step 2: Insert MEMBER_BOOKS
-        INSERT INTO MEMBER_BOOKS (Status, LoanID, MemberID, BookID)
-        VALUES ('Issued', @CurrLoanID, @CurrMemberID, @CurrBookID);
+--        -- Step 2: Insert MEMBER_BOOKS
+--        INSERT INTO MEMBER_BOOKS (Status, LoanID, MemberID, BookID)
+--        VALUES ('Issued', @CurrLoanID, @CurrMemberID, @CurrBookID);
 
-        PRINT 'Inserted into MEMBER_BOOKS';
+--        PRINT 'Inserted into MEMBER_BOOKS';
 
-        -- Step 3: Update BOOK
-        UPDATE BOOK
-        SET Availability_Status = 'Checked Out'
-        WHERE BookID = @CurrBookID;
+--        -- Step 3: Update BOOK
+--        UPDATE BOOK
+--        SET Availability_Status = 'Checked Out'
+--        WHERE BookID = @CurrBookID;
 
-        PRINT 'Updated BOOK availability';
+--        PRINT 'Updated BOOK availability';
 
-    END TRY
-    BEGIN CATCH
-        ROLLBACK;
-        PRINT 'Error: ' + ERROR_MESSAGE();
-        SELECT ERROR_LINE() AS Line, ERROR_MESSAGE() AS Msg, ERROR_NUMBER() AS Code;
-        CLOSE loan_cursor;
-        DEALLOCATE loan_cursor;
-        RETURN; -- exit loop on failure
-    END CATCH
+--    END TRY
+--    BEGIN CATCH
+--        ROLLBACK;
+--        PRINT 'Error: ' + ERROR_MESSAGE();
+--        SELECT ERROR_LINE() AS Line, ERROR_MESSAGE() AS Msg, ERROR_NUMBER() AS Code;
+--        CLOSE loan_cursor;
+--        DEALLOCATE loan_cursor;
+--        RETURN; -- exit loop on failure
+--    END CATCH
 
-    FETCH NEXT FROM loan_cursor INTO @CurrMemberID, @CurrBookID;
-END
+--    FETCH NEXT FROM loan_cursor INTO @CurrMemberID, @CurrBookID;
+--END
 
-COMMIT;
+--COMMIT;
 
-CLOSE loan_cursor;
-DEALLOCATE loan_cursor;
+--CLOSE loan_cursor;
+--DEALLOCATE loan_cursor;
 
 
