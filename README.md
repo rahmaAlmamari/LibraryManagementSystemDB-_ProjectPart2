@@ -12,3 +12,9 @@ what I’ve learned over the past period.
 
 ## **2. Which concept helped them think like a backend dev?**
 
+Stored Procedures and Functions were the concepts that helped me think like a backend developer.
+and that because they allowed me to encapsulate complex logic and operations within the database,
+into reusable components. This not only improved the efficiency of my code but also made 
+it easier to maintain and debug.
+
+
